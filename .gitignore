@@ -355,6 +355,7 @@ siv3d.a
 *.jppmdl
 Screenshot/
 AS_DEBUG/
+example/
 
 ## CMake
 CMakeCache.txt
