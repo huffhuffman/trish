@@ -91,7 +91,9 @@ double gravityLevel = 0.2;
 
 int64 score = 0;
 
-int32 abilityPoint = 1;
+int64 deleteCount = 0;
+
+bool abilityReady = true;
 
 /* free methods */
 void initGrid() {
@@ -193,11 +195,6 @@ void changeMino() {
 
   int32 nextMinoIdx = Random<int32>(6);
 
-  if (currentBlock == minoList[nextMinoIdx]) {
-    nextMinoIdx++;
-    nextMinoIdx %= 7;
-  }
-
   currentBlock = minoList[nextMinoIdx];
 }
 
@@ -212,7 +209,7 @@ void freezeMino() {
     }
   }
 
-  abilityPoint = std::max(1, 0);
+  abilityReady = std::max(1, 0);
 }
 
 bool minoSafeness() {
@@ -331,13 +328,13 @@ void Main() {
       }
     }
 
-    if (KeyUp.pressed() && abilityPoint > 0) {
+    if (KeyUp.pressed() && abilityReady) {
       pushMsg(U"特殊能力発動");
 
       changeMino();
       inputwatch.restart();
 
-      abilityPoint--;
+      abilityReady = false;
     }
   };
 
@@ -368,6 +365,12 @@ void Main() {
 
         score += y * 2;
 
+        deleteCount++;
+
+        if (deleteCount % 4 == 0 && gravityLevel > 0.06) {
+          gravityLevel *= 0.8;
+        }
+
         effect.add([y](double t) {
           const double e = EaseOutExpo(t);
 
@@ -389,15 +392,19 @@ void Main() {
     font30(U"↑: 特殊能力").draw(InfoFieldX, 550);
     font16(U"特殊能力はミノの設置に成功すると回復します。")
         .draw(InfoFieldX, 600);
+    font16(U"{}秒毎に1セル落下"_fmt(gravityLevel)).draw(InfoFieldX, 700);
   };
 
   auto drawGameInfo = [&]() {
     font30(U"Score: {}"_fmt(score)).draw(offset.x, 10);
-    font20(U"特殊能力: {}"_fmt(abilityPoint ? U"発動可" : U"回復待ち"))
+    font20(U"特殊能力: {}"_fmt(abilityReady ? U"発動可" : U"回復待ち"))
         .draw(offset.x, 50);
   };
 
   while (System::Update()) {
+    ClearPrint();
+    Print << deleteCount;
+
     drawInstruction();
 
     drawGameInfo();
