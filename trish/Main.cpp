@@ -402,9 +402,6 @@ void Main() {
   };
 
   while (System::Update()) {
-    ClearPrint();
-    Print << deleteCount;
-
     drawInstruction();
 
     drawGameInfo();
