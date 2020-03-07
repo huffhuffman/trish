@@ -5,7 +5,7 @@
 
 後先考えずにとにかく勢いだけで作ったテトリス風ゲーム
 
-> WARN: ソースコードは死人がでるかもしれないレベルで汚いので要注意です。
+> WARN: ソースコードは死人がでるかもしれないレベルで汚いです。
 
 ## demo
 
@@ -13,7 +13,7 @@
 
 ## download
 
-まだプロトタイプ版ですが、リリースページからゲーム本体をダウンロードできます。（現在は Windows 64-bit 向けビルドのみ）
+まだプロトタイプ版ですが、リリースページからゲーム本体をダウンロードできます。（Windows 64-bit 向けビルドのみ）
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/huffhuffman/trish?style=social)](https://github.com/huffhuffman/trish/releases)
 
